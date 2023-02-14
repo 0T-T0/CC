@@ -38,26 +38,27 @@ public class Logs1 {
     {
         private IntWritable answer=new IntWritable();
         public void reduce(Text key,Iterable<IntWritable> values,Context context) throws IOException, InterruptedException
-        {public class Logs1 {
-            public static class log1map extends Mapper<LongWritable,Text,Text,IntWritable>
-            {
-                private Text name=new Text();
-                private final static IntWritable one = new IntWritable(1);
-                public void map(LongWritable key,Text value,Context context) throws IOException, InterruptedException
+        {
+            public class Logs1 {
+                public static class log1map extends Mapper<LongWritable,Text,Text,IntWritable>
                 {
-                    StringTokenizer stok=new StringTokenizer(value.toString(),"\n");
-                    while(stok.hasMoreTokens())
+                    private Text name=new Text();
+                    private final static IntWritable one = new IntWritable(1);
+                    public void map(LongWritable key,Text value,Context context) throws IOException, InterruptedException
                     {
-                        String [] sentence=stok.nextToken().split("\"");
-                        String address=sentence[1];
-                        if (address.contains("/assets/img/home-logo.png"))
+                        StringTokenizer stok=new StringTokenizer(value.toString(),"\n");
+                        while(stok.hasMoreTokens())
                         {
-                            name.set("/assets/img/home-logo.png");
-                            context.write(name, one);
+                            String [] sentence=stok.nextToken().split("\"");
+                            String address=sentence[1];
+                            if (address.contains("/assets/img/home-logo.png"))
+                            {
+                                name.set("/assets/img/home-logo.png");
+                                context.write(name, one);
+                            }
                         }
                     }
                 }
-            }
             public static class log1reduce extends  Reducer <Text,IntWritable,Text,IntWritable>
             {
                 private IntWritable answer=new IntWritable();
